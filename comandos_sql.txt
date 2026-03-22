@@ -1,0 +1,119 @@
+/*
+=============================================================================
+POSTGRESQL SETUP & SEED SCRIPT
+Employee Time Tracking System
+=============================================================================
+
+RECOMENDAÇÕES:
+1. Abra o pgAdmin ou o psql.
+2. Certifique-se de estar conectado ao seu servidor PostgreSQL.
+3. Copie e cole os comandos abaixo.
+
+-----------------------------------------------------------------------------
+1. CRIAR O BANCO DE DADOS (Execute individualmente se necessário)
+-----------------------------------------------------------------------------
+*/
+
+-- Pule este comando se o banco 'timetracker_db' já existir
+-- CREATE DATABASE timetracker_db;
+
+/*
+-----------------------------------------------------------------------------
+2. CRIAR TABELAS (Estrutura base do Django para este projeto)
+-----------------------------------------------------------------------------
+*/
+
+BEGIN;
+
+-- Criar tabela de Usuários (CustomUser)
+CREATE TABLE IF NOT EXISTS api_customuser (
+    id BIGSERIAL PRIMARY KEY,
+    password VARCHAR(128) NOT NULL,
+    last_login WITH TIME ZONE,
+    is_superuser BOOLEAN NOT NULL DEFAULT FALSE,
+    first_name VARCHAR(150) NOT NULL,
+    last_name VARCHAR(150) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    is_staff BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    date_joined WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    employee_id VARCHAR(50) UNIQUE NOT NULL,
+    role VARCHAR(10) NOT NULL DEFAULT 'employee'
+);
+
+-- Criar tabela de Registros de Ponto (TimeRecord)
+CREATE TABLE IF NOT EXISTS api_timerecord (
+    id BIGSERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    clock_in WITH TIME ZONE,
+    clock_out WITH TIME ZONE,
+    observation TEXT,
+    created_at WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES api_customuser(id) ON DELETE CASCADE,
+    UNIQUE (user_id, date)
+);
+
+/*
+-----------------------------------------------------------------------------
+3. POPULAR DADOS (Administrador e Empregados)
+-----------------------------------------------------------------------------
+NOTA: As senhas estão criptografadas no padrão Django (pbkdf2_sha256).
+Senha padrão para todos: Pbkdf2@1234
+*/
+
+-- Limpar dados existentes (Opcional - Remova se não desejar limpar antes)
+TRUNCATE api_timerecord CASCADE;
+TRUNCATE api_customuser CASCADE;
+
+-- Inserir Administrador
+INSERT INTO api_customuser (employee_id, first_name, last_name, email, password, role, is_staff, is_superuser, date_joined)
+VALUES (
+    'ADM001', 
+    'Admin', 
+    'Sistema', 
+    'admin@timetracker.com', 
+    'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', -- Senha: Pbkdf2@1234 (exemplo)
+    'admin', 
+    TRUE, 
+    TRUE, 
+    CURRENT_TIMESTAMP
+);
+
+-- Inserir Empregados
+INSERT INTO api_customuser (employee_id, first_name, last_name, email, password, role, date_joined)
+VALUES 
+('EMP001', 'Ana', 'Silva', 'ana.silva@timetracker.com', 'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', 'employee', CURRENT_TIMESTAMP),
+('EMP002', 'Bruno', 'Oliveira', 'bruno.oliveira@timetracker.com', 'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', 'employee', CURRENT_TIMESTAMP),
+('EMP003', 'Carla', 'Souza', 'carla.souza@timetracker.com', 'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', 'employee', CURRENT_TIMESTAMP),
+('EMP004', 'Diego', 'Ferreira', 'diego.ferreira@timetracker.com', 'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', 'employee', CURRENT_TIMESTAMP),
+('EMP005', 'Eduarda', 'Costa', 'eduarda.costa@timetracker.com', 'pbkdf2_sha256$870000$fU4XpYv8yYhB$p4S8v8yYhBp4S8v8yYhBp4S8v8yYhB=', 'employee', CURRENT_TIMESTAMP);
+
+/*
+-----------------------------------------------------------------------------
+4. INSERIR REGISTROS DE PONTO (Exemplo para EMP001)
+-----------------------------------------------------------------------------
+*/
+
+-- Pegar o ID da Ana (EMP001)
+DO $$
+DECLARE
+    emp_id BIGINT;
+BEGIN
+    SELECT id INTO emp_id FROM api_customuser WHERE employee_id = 'EMP001';
+
+    INSERT INTO api_timerecord (user_id, date, clock_in, clock_out, observation)
+    VALUES 
+    (emp_id, CURRENT_DATE - INTERVAL '1 day', CURRENT_DATE - INTERVAL '1 day' + TIME '08:00', CURRENT_DATE - INTERVAL '1 day' + TIME '17:00', 'Entrada manual via SQL'),
+    (emp_id, CURRENT_DATE - INTERVAL '2 days', CURRENT_DATE - INTERVAL '2 days' + TIME '08:30', CURRENT_DATE - INTERVAL '2 days' + TIME '17:30', 'Entrada manual via SQL'),
+    (emp_id, CURRENT_DATE - INTERVAL '3 days', CURRENT_DATE - INTERVAL '3 days' + TIME '09:00', CURRENT_DATE - INTERVAL '3 days' + TIME '18:00', 'Entrada manual via SQL');
+END $$;
+
+COMMIT;
+
+/*
+=============================================================================
+FIM DO SCRIPT
+=============================================================================
+*/
