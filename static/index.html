@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rastreador de Tempo</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,44 +15,18 @@
         align-items: center;
         padding: 20px;
       }
-
-      .container {
-        width: 100%;
-        max-width: 500px;
-      }
-
+      .container { width: 100%; max-width: 500px; }
       .card {
         background: white;
         border-radius: 10px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         padding: 40px;
       }
-
-      h1 {
-        color: #333;
-        margin-bottom: 10px;
-        font-size: 28px;
-      }
-
-      .subtitle {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 30px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 8px;
-        color: #333;
-        font-weight: 500;
-      }
-
-      input[type="text"],
-      input[type="password"] {
+      h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
+      .subtitle { color: #666; font-size: 14px; margin-bottom: 30px; }
+      .form-group { margin-bottom: 20px; }
+      label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
+      input[type="text"], input[type="password"], input[type="date"] {
         width: 100%;
         padding: 12px;
         border: 1px solid #ddd;
@@ -65,13 +34,7 @@
         font-size: 14px;
         transition: border-color 0.3s;
       }
-
-      input[type="text"]:focus,
-      input[type="password"]:focus {
-        outline: none;
-        border-color: #667eea;
-      }
-
+      input:focus { outline: none; border-color: #667eea; }
       button {
         width: 100%;
         padding: 12px;
@@ -84,662 +47,338 @@
         cursor: pointer;
         transition: transform 0.2s;
       }
-
-      button:hover {
-        transform: translateY(-2px);
-      }
-
-      button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .alert {
-        padding: 12px 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        display: none;
-      }
-
-      .alert.error {
-        background: #fee;
-        color: #c33;
-        border-left: 4px solid #c33;
-        display: block;
-      }
-
-      .alert.success {
-        background: #efe;
-        color: #3c3;
-        border-left: 4px solid #3c3;
-        display: block;
-      }
-
-      .dashboard {
-        display: none;
-      }
-
-      .user-info {
-        background: #f5f5f5;
-        padding: 20px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      .user-info h2 {
-        color: #333;
-        font-size: 24px;
-        margin-bottom: 5px;
-      }
-
-      .user-info p {
-        color: #666;
-        font-size: 14px;
-      }
-
-      .time-status {
-        background: #f0f7ff;
-        padding: 20px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        border-left: 4px solid #667eea;
-      }
-
-      .time-status h3 {
-        color: #333;
-        margin-bottom: 10px;
-      }
-
-      .time-status p {
-        color: #666;
-        margin: 5px 0;
-        font-size: 14px;
-      }
-
-      .button-group {
-        display: flex;
-        gap: 10px;
-      }
-
-      .button-group button {
-        flex: 1;
-      }
-
-      .secondary-btn {
-        background: #666;
-        color: white;
-      }
-
-      .secondary-btn:hover {
-        background: #555;
-      }
-
-      .records-container {
-        margin-top: 30px;
-      }
-
-      .records-container h3 {
-        color: #333;
-        margin-bottom: 15px;
-      }
-
-      .record-item {
-        background: #f9f9f9;
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        border-left: 3px solid #667eea;
-      }
-
-      .record-item p {
-        color: #555;
-        font-size: 12px;
-        margin: 3px 0;
-      }
-
-      .record-item strong {
-        color: #333;
-      }
-
-      .admin-dashboard {
-        display: none;
-      }
-
-      .employees-grid {
-        display: grid;
-        gap: 15px;
-      }
-
-      .employee-card {
-        background: #f5f5f5;
-        padding: 15px;
-        border-radius: 5px;
-        border-left: 3px solid #667eea;
-      }
-
-      .employee-card h4 {
-        color: #333;
-        margin-bottom: 8px;
-      }
-
-      .employee-card p {
-        color: #666;
-        font-size: 13px;
-        margin: 3px 0;
-      }
-
-      .logout-btn {
-        background: #666;
-        margin-top: 20px;
-      }
-
-      .loading {
-        opacity: 0.6;
-      }
-
-      .time-badge {
-        display: inline-block;
-        background: #667eea;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 3px;
-        font-size: 12px;
-        margin-left: 5px;
-      }
-
-      .status-active {
-        color: #3c3;
-        font-weight: 600;
-      }
-
-      .status-inactive {
-        color: #999;
-      }
+      button:hover { transform: translateY(-2px); }
+      button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      .alert { padding: 12px 15px; border-radius: 5px; margin-bottom: 20px; display: none; }
+      .alert.error { background: #fee; color: #c33; border-left: 4px solid #c33; display: block; }
+      .alert.success { background: #efe; color: #3c3; border-left: 4px solid #3c3; display: block; }
+      .dashboard { display: none; }
+      .user-info { background: #f5f5f5; padding: 20px; border-radius: 5px; margin-bottom: 20px; text-align: center; }
+      .user-info h2 { color: #333; font-size: 24px; margin-bottom: 5px; }
+      .user-info p { color: #666; font-size: 14px; }
+      .time-status { background: #f0f7ff; padding: 20px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+      .time-status h3 { color: #333; margin-bottom: 10px; }
+      .time-status p { color: #666; margin: 5px 0; font-size: 14px; }
+      .button-group { display: flex; gap: 10px; }
+      .button-group button { flex: 1; }
+      .secondary-btn { background: #666 !important; }
+      .logout-btn { background: #666 !important; margin-top: 20px; }
+      .records-container { margin-top: 30px; }
+      .records-container h3 { color: #333; margin-bottom: 15px; }
+      .record-item { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 3px solid #667eea; }
+      .record-item p { color: #555; font-size: 12px; margin: 3px 0; }
+      .record-item strong { color: #333; }
+      .time-badge { display: inline-block; background: #667eea; color: white; padding: 4px 8px; border-radius: 3px; font-size: 12px; margin-left: 5px; }
+      .status-active { color: #3c3; font-weight: 600; }
+      .status-inactive { color: #999; }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- LOGIN SCREEN -->
+
+      <!-- LOGIN -->
       <div id="loginScreen" class="card">
         <h1>Rastreador de Tempo</h1>
         <p class="subtitle">Controle suas horas de trabalho</p>
-
         <div id="loginAlert" class="alert"></div>
-
         <div class="form-group">
           <label for="employeeId">ID do Funcionário</label>
-          <input
-            type="text"
-            id="employeeId"
-            placeholder="Ex: EMP001"
-            required
-          />
+          <input type="text" id="employeeId" placeholder="Ex: EMP001" />
         </div>
-
         <div class="form-group">
           <label for="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Sua senha"
-            required
-          />
+          <input type="password" id="password" placeholder="Sua senha" />
         </div>
-
         <button id="loginBtn" onclick="handleLogin()">Entrar</button>
       </div>
 
-      <!-- EMPLOYEE DASHBOARD -->
+      <!-- DASHBOARD FUNCIONÁRIO -->
       <div id="employeeDashboard" class="dashboard">
         <div class="card">
           <div class="user-info">
-            <h2 id="userName">Aqui Vem o Nome</h2>
-            <p id="userRole">Funcionário</p>
+            <h2 id="userName">-</h2>
+            <p id="userRoleLabel">Funcionário</p>
           </div>
-
           <div id="timeAlert" class="alert"></div>
-
           <div class="time-status">
             <h3>Status do Dia</h3>
             <p><strong>Data:</strong> <span id="todayDate">-</span></p>
-            <p>
-              <strong>Entrada:</strong>
-              <span id="clockInTime" class="status-inactive"
-                >Não registrado</span
-              >
-            </p>
-            <p>
-              <strong>Saída:</strong>
-              <span id="clockOutTime" class="status-inactive"
-                >Não registrado</span
-              >
-            </p>
-            <p>
-              <strong>Horas Trabalhadas:</strong>
-              <span id="workedHours">-</span>
-            </p>
+            <p><strong>Entrada:</strong> <span id="clockInTime" class="status-inactive">Não registrado</span></p>
+            <p><strong>Saída:</strong> <span id="clockOutTime" class="status-inactive">Não registrado</span></p>
+            <p><strong>Horas Trabalhadas:</strong> <span id="workedHours">-</span></p>
             <p><strong>Observação:</strong> <span id="observation">-</span></p>
           </div>
-
           <div class="button-group">
-            <button
-              id="clockInBtn"
-              onclick="handleClockIn()"
-              class="primary-btn"
-            >
-              Registrar Entrada
-            </button>
-            <button
-              id="clockOutBtn"
-              onclick="handleClockOut()"
-              class="secondary-btn"
-              disabled
-            >
-              Registrar Saída
-            </button>
+            <button id="clockInBtn" onclick="handleClockIn()">Registrar Entrada</button>
+            <button id="clockOutBtn" onclick="handleClockOut()" class="secondary-btn" disabled>Registrar Saída</button>
           </div>
-
           <button class="logout-btn" onclick="handleLogout()">Sair</button>
-
           <div class="records-container">
             <h3>Últimos Registros</h3>
-            <div id="recordsList">
-              <p style="color: #999; text-align: center">Carregando...</p>
-            </div>
+            <div id="recordsList"><p style="color:#999;text-align:center">Carregando...</p></div>
           </div>
         </div>
       </div>
 
-      <!-- ADMIN DASHBOARD -->
+      <!-- DASHBOARD ADMIN -->
       <div id="adminDashboard" class="dashboard">
         <div class="card">
           <h1>Painel Administrativo</h1>
-
           <div id="adminAlert" class="alert"></div>
-
-          <div style="margin-bottom: 20px">
-            <input
-              type="text"
-              id="searchEmployee"
-              placeholder="Buscar funcionário..."
-              style="margin-bottom: 10px; width: 100%"
-            />
-            <input type="date" id="filterDate" style="width: 100%" />
+          <div class="time-status" style="margin-bottom:20px">
+            <h3>Resumo do Dia</h3>
+            <p><strong>Total de funcionários:</strong> <span id="totalEmployees">-</span></p>
+            <p><strong>Registraram entrada:</strong> <span id="clockedInToday">-</span></p>
+            <p><strong>Registraram saída:</strong> <span id="clockedOutToday">-</span></p>
+            <p><strong>Não registraram entrada:</strong> <span id="notClockedInToday">-</span></p>
           </div>
-
-          <button
-            id="searchBtn"
-            onclick="handleSearchRecords()"
-            style="margin-bottom: 20px"
-          >
-            Buscar
-          </button>
-
-          <div id="recordsTable">
-            <p style="color: #999; text-align: center">
-              Carregando registros...
-            </p>
+          <div style="margin-bottom:20px">
+            <input type="text" id="searchEmployee" placeholder="Buscar funcionário..." style="margin-bottom:10px" />
+            <input type="date" id="filterDate" />
           </div>
-
+          <button id="searchBtn" onclick="handleSearchRecords()" style="margin-bottom:20px">Buscar</button>
+          <div id="recordsTable"><p style="color:#999;text-align:center">Carregando registros...</p></div>
           <button class="logout-btn" onclick="handleLogout()">Sair</button>
         </div>
       </div>
-    </div>
 
+    </div>
     <script>
-      const API_BASE = "http://" + window.location.hostname + ":8000/api";
+      const API_BASE = "/api";
       let authToken = null;
       let userRole = null;
       let currentUser = null;
 
-      // ==================== UTILITIES ====================
+      // ── Utilitários ──────────────────────────────────────────────────────
 
-      function showAlert(elementId, message, type = "error") {
-        const alert = document.getElementById(elementId);
-        alert.textContent = message;
-        alert.className = `alert ${type}`;
-        alert.style.display = "block";
-        setTimeout(() => {
-          alert.style.display = "none";
-        }, 5000);
+      function showAlert(id, msg, type = "error") {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.className = "alert " + type;
+        setTimeout(() => { el.className = "alert"; }, 5000);
       }
 
-      function formatDate(dateString) {
-        const options = {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        };
-        return new Date(dateString).toLocaleDateString("pt-BR", options);
+      function formatDate(s) {
+        if (!s) return "-";
+        return new Date(s).toLocaleDateString("pt-BR", { day:"2-digit", month:"2-digit", year:"numeric" });
       }
 
-      function formatTime(dateString) {
-        if (!dateString) return "-";
-        return new Date(dateString).toLocaleTimeString("pt-BR");
+      function formatTime(s) {
+        if (!s) return "-";
+        return new Date(s).toLocaleTimeString("pt-BR", { hour:"2-digit", minute:"2-digit" });
       }
 
-      function getTodayDate() {
-        return new Date().toLocaleDateString("pt-BR");
-      }
+      function show(id) { document.getElementById(id).style.display = "block"; }
+      function hide(id) { document.getElementById(id).style.display = "none"; }
 
       async function apiCall(endpoint, method = "GET", body = null) {
-        const headers = {
-          "Content-Type": "application/json",
-        };
-
-        if (authToken) {
-          headers["Authorization"] = `Bearer ${authToken}`;
-        }
-
-        const options = {
-          method,
-          headers,
-        };
-
-        if (body) {
-          options.body = JSON.stringify(body);
-        }
-
-        try {
-          const response = await fetch(`${API_BASE}${endpoint}`, options);
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(
-              data.detail || Object.values(data)[0] || "Erro na requisição",
-            );
-          }
-
-          return data;
-        } catch (error) {
-          throw error;
-        }
+        const token = authToken || sessionStorage.getItem("authToken");
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = "Bearer " + token;
+        const opts = { method, headers };
+        if (body) opts.body = JSON.stringify(body);
+        const res = await fetch(API_BASE + endpoint, opts);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || Object.values(data)[0] || "Erro na requisição");
+        return data;
       }
 
-      // ==================== LOGIN ====================
+      // ── Login / Logout ───────────────────────────────────────────────────
 
       async function handleLogin() {
-        const employeeId = document.getElementById("employeeId").value;
-        const password = document.getElementById("password").value;
+        const employeeId = document.getElementById("employeeId").value.trim();
+        const password   = document.getElementById("password").value;
+        if (!employeeId || !password) { showAlert("loginAlert", "Preencha ID e senha"); return; }
 
-        if (!employeeId || !password) {
-          showAlert("loginAlert", "Preencha ID e senha", "error");
-          return;
-        }
-
-        const loginBtn = document.getElementById("loginBtn");
-        loginBtn.disabled = true;
-        loginBtn.classList.add("loading");
-
+        const btn = document.getElementById("loginBtn");
+        btn.disabled = true;
         try {
-          const response = await apiCall("/token/", "POST", {
-            employee_id: employeeId,
-            password: password,
-          });
+          const res = await apiCall("/token/", "POST", { employee_id: employeeId, password });
 
-          authToken = response.access;
-          userRole = response.role;
-          currentUser = {
-            id: response.user_id,
-            name: response.full_name,
-            employee_id: employeeId,
-          };
+          authToken   = res.access;
+          userRole    = (res.role || "employee").toLowerCase();
+          currentUser = { id: res.user_id, name: res.full_name, employee_id: employeeId };
 
-          document.getElementById("loginScreen").style.display = "none";
+          sessionStorage.setItem("authToken",    authToken);
+          sessionStorage.setItem("userRole",     userRole);
+          sessionStorage.setItem("currentUser",  JSON.stringify(currentUser));
 
-          if (userRole === "admin") {
-            loadAdminDashboard();
-          } else {
-            loadEmployeeDashboard();
-          }
-        } catch (error) {
-          showAlert("loginAlert", error.message, "error");
+          hide("loginScreen");
+          userRole === "admin" ? loadAdminDashboard() : loadEmployeeDashboard();
+        } catch (e) {
+          showAlert("loginAlert", e.message);
         } finally {
-          loginBtn.disabled = false;
-          loginBtn.classList.remove("loading");
+          btn.disabled = false;
         }
       }
 
       function handleLogout() {
-        authToken = null;
-        userRole = null;
-        currentUser = null;
-        document.getElementById("loginScreen").style.display = "block";
-        document.getElementById("employeeDashboard").style.display = "none";
-        document.getElementById("adminDashboard").style.display = "none";
+        authToken = userRole = currentUser = null;
+        sessionStorage.clear();
+        show("loginScreen");
+        hide("employeeDashboard");
+        hide("adminDashboard");
         document.getElementById("employeeId").value = "";
-        document.getElementById("password").value = "";
+        document.getElementById("password").value   = "";
       }
 
-      // ==================== EMPLOYEE DASHBOARD ====================
+      // ── Dashboard Funcionário ────────────────────────────────────────────
 
       async function loadEmployeeDashboard() {
-        document.getElementById("employeeDashboard").style.display = "block";
-        document.getElementById("userName").textContent = currentUser.name;
-        document.getElementById("userRole").textContent =
-          "ID: " + currentUser.employee_id;
-        document.getElementById("todayDate").textContent = getTodayDate();
-
+        show("employeeDashboard");
+        document.getElementById("userName").textContent      = currentUser.name;
+        document.getElementById("userRoleLabel").textContent = "ID: " + currentUser.employee_id;
+        document.getElementById("todayDate").textContent     = new Date().toLocaleDateString("pt-BR");
         await loadTodayRecord();
         await loadEmployeeRecords();
       }
 
       async function loadTodayRecord() {
         try {
-          const record = await apiCall("/dashboard/");
-
-          if (record.clock_in) {
-            document.getElementById("clockInTime").textContent = formatTime(
-              record.clock_in,
-            );
-            document.getElementById("clockInTime").className = "status-active";
-            document.getElementById("clockInBtn").disabled = true;
-            document.getElementById("clockOutBtn").disabled = false;
-          } else {
-            document.getElementById("clockInBtn").disabled = false;
-            document.getElementById("clockOutBtn").disabled = true;
+          const r = await apiCall("/dashboard/");
+          if (r.clock_in) {
+            document.getElementById("clockInTime").textContent  = formatTime(r.clock_in);
+            document.getElementById("clockInTime").className    = "status-active";
+            document.getElementById("clockInBtn").disabled      = true;
+            document.getElementById("clockOutBtn").disabled     = false;
           }
-
-          if (record.clock_out) {
-            document.getElementById("clockOutTime").textContent = formatTime(
-              record.clock_out,
-            );
-            document.getElementById("clockOutTime").className = "status-active";
-            document.getElementById("clockOutBtn").disabled = true;
+          if (r.clock_out) {
+            document.getElementById("clockOutTime").textContent = formatTime(r.clock_out);
+            document.getElementById("clockOutTime").className   = "status-active";
+            document.getElementById("clockOutBtn").disabled     = true;
           }
-
-          if (record.worked_hours) {
-            document.getElementById("workedHours").textContent =
-              record.worked_hours;
-          }
-
-          if (record.observation) {
-            document.getElementById("observation").textContent =
-              record.observation;
-          }
-        } catch (error) {
-          showAlert("timeAlert", error.message, "error");
+          if (r.worked_hours)  document.getElementById("workedHours").textContent = r.worked_hours;
+          if (r.observation)   document.getElementById("observation").textContent  = r.observation;
+        } catch (e) {
+          if (!e.message.includes("404")) showAlert("timeAlert", e.message);
         }
       }
 
       async function handleClockIn() {
-        const btn = document.getElementById("clockInBtn");
-        btn.disabled = true;
-
+        document.getElementById("clockInBtn").disabled = true;
         try {
-          await apiCall("/clock-in/", "POST", {
-            observation: "Entrada registrada",
-          });
+          await apiCall("/clock-in/", "POST", { observation: "Entrada registrada" });
           showAlert("timeAlert", "Entrada registrada com sucesso!", "success");
           await loadTodayRecord();
-        } catch (error) {
-          showAlert("timeAlert", error.message, "error");
-          btn.disabled = false;
+        } catch (e) {
+          showAlert("timeAlert", e.message);
+          document.getElementById("clockInBtn").disabled = false;
         }
       }
 
       async function handleClockOut() {
-        const btn = document.getElementById("clockOutBtn");
-        btn.disabled = true;
-
+        document.getElementById("clockOutBtn").disabled = true;
         try {
-          await apiCall("/clock-out/", "POST", {
-            observation: "Saída registrada",
-          });
+          await apiCall("/clock-out/", "POST", { observation: "Saída registrada" });
           showAlert("timeAlert", "Saída registrada com sucesso!", "success");
           await loadTodayRecord();
-        } catch (error) {
-          showAlert("timeAlert", error.message, "error");
-          btn.disabled = false;
+        } catch (e) {
+          showAlert("timeAlert", e.message);
+          document.getElementById("clockOutBtn").disabled = false;
         }
       }
 
       async function loadEmployeeRecords() {
         try {
           const records = await apiCall("/records/");
-
-          const recordsList = document.getElementById("recordsList");
-          if (records.length === 0) {
-            recordsList.innerHTML =
-              '<p style="color: #999; text-align: center;">Nenhum registro</p>';
+          const el = document.getElementById("recordsList");
+          if (!records || !records.length) {
+            el.innerHTML = '<p style="color:#999;text-align:center">Nenhum registro</p>';
             return;
           }
-
-          recordsList.innerHTML = records
-            .slice(0, 5)
-            .map(
-              (record) => `
-                        <div class="record-item">
-                            <p><strong>${formatDate(record.date)}</strong></p>
-                            <p>Entrada: <span class="time-badge">${formatTime(record.clock_in) || "-"}</span></p>
-                            <p>Saída: <span class="time-badge">${formatTime(record.clock_out) || "-"}</span></p>
-                            <p>Horas: <strong>${record.worked_hours || "-"}</strong></p>
-                        </div>
-                    `,
-            )
-            .join("");
-        } catch (error) {
-          console.error("Erro ao carregar registros:", error);
-        }
+          el.innerHTML = records.slice(0, 5).map(r => `
+            <div class="record-item">
+              <p><strong>${formatDate(r.date)}</strong></p>
+              <p>Entrada: <span class="time-badge">${formatTime(r.clock_in)}</span></p>
+              <p>Saída: <span class="time-badge">${formatTime(r.clock_out)}</span></p>
+              <p>Horas: <strong>${r.worked_hours || "-"}</strong></p>
+            </div>`).join("");
+        } catch (e) { console.error(e); }
       }
 
-      // ==================== ADMIN DASHBOARD ====================
+      // ── Dashboard Admin ──────────────────────────────────────────────────
 
       async function loadAdminDashboard() {
-        document.getElementById("adminDashboard").style.display = "block";
+        hide("employeeDashboard");
+        show("adminDashboard");
+        await loadAdminSummary();
         await handleSearchRecords();
       }
 
-      async function handleSearchRecords() {
-        const search = document.getElementById("searchEmployee").value;
-        const date = document.getElementById("filterDate").value;
-
-        const searchBtn = document.getElementById("searchBtn");
-        searchBtn.disabled = true;
-
+      async function loadAdminSummary() {
         try {
-          let query = "/admin/records/?";
-          if (search) query += `search=${encodeURIComponent(search)}&`;
-          if (date) query += `date=${date}&`;
-
-          const records = await apiCall(query.slice(0, -1));
-
-          const recordsTable = document.getElementById("recordsTable");
-          if (records.length === 0) {
-            recordsTable.innerHTML =
-              '<p style="color: #999; text-align: center;">Nenhum registro encontrado</p>';
-            return;
-          }
-
-          recordsTable.innerHTML = records
-            .map(
-              (record) => `
-                        <div class="record-item">
-                            <p><strong>${record.user.full_name}</strong> (${record.user.employee_id})</p>
-                            <p>Data: <span class="time-badge">${formatDate(record.date)}</span></p>
-                            <p>Entrada: ${formatTime(record.clock_in) || "-"}</p>
-                            <p>Saída: ${formatTime(record.clock_out) || "-"}</p>
-                            <p>Horas: <strong>${record.worked_hours || "-"}</strong></p>
-                        </div>
-                    `,
-            )
-            .join("");
-        } catch (error) {
-          showAlert("adminAlert", error.message, "error");
-        } finally {
-          searchBtn.disabled = false;
+          const s = await apiCall("/admin/dashboard/");
+          document.getElementById("totalEmployees").textContent    = s.total_employees      ?? "-";
+          document.getElementById("clockedInToday").textContent    = s.clocked_in_today     ?? "-";
+          document.getElementById("clockedOutToday").textContent   = s.clocked_out_today    ?? "-";
+          document.getElementById("notClockedInToday").textContent = s.not_clocked_in_today ?? "-";
+        } catch (e) {
+          showAlert("adminAlert", "Erro ao carregar resumo: " + e.message);
         }
       }
 
-      // ==================== INITIALIZE ====================
+      async function handleSearchRecords() {
+        const search = document.getElementById("searchEmployee").value.trim();
+        const date   = document.getElementById("filterDate").value;
+        const btn    = document.getElementById("searchBtn");
+        const table  = document.getElementById("recordsTable");
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Check if user is already logged in (from sessionStorage)
-        const savedToken = sessionStorage.getItem("authToken");
-        if (savedToken) {
-          authToken = savedToken;
-          userRole = sessionStorage.getItem("userRole");
-          currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-
-          if (userRole === "admin") {
-            loadAdminDashboard();
-          } else {
-            loadEmployeeDashboard();
-          }
-        }
-      });
-
-      // Save token to sessionStorage on login
-      const originalLogin = handleLogin;
-      handleLogin = async function () {
-        const employeeId = document.getElementById("employeeId").value;
-        const password = document.getElementById("password").value;
-
-        if (!employeeId || !password) {
-          showAlert("loginAlert", "Preencha ID e senha", "error");
-          return;
-        }
-
-        const loginBtn = document.getElementById("loginBtn");
-        loginBtn.disabled = true;
-        loginBtn.classList.add("loading");
-
+        btn.disabled = true;
         try {
-          const response = await apiCall("/token/", "POST", {
-            employee_id: employeeId,
-            password: password,
-          });
+          let query = "/admin/records/";
+          const params = [];
+          if (search) params.push("search=" + encodeURIComponent(search));
+          if (date)   params.push("date="   + date);
+          if (params.length) query += "?" + params.join("&");
 
-          authToken = response.access;
-          userRole = response.role;
-          currentUser = {
-            id: response.user_id,
-            name: response.full_name,
-            employee_id: employeeId,
-          };
+          const records = await apiCall(query);
 
-          sessionStorage.setItem("authToken", authToken);
-          sessionStorage.setItem("userRole", userRole);
-          sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-          document.getElementById("loginScreen").style.display = "none";
-
-          if (userRole === "admin") {
-            loadAdminDashboard();
-          } else {
-            loadEmployeeDashboard();
+          if (!records || !records.length) {
+            table.innerHTML = '<p style="color:#999;text-align:center">Nenhum registro encontrado</p>';
+            return;
           }
-        } catch (error) {
-          showAlert("loginAlert", error.message, "error");
+
+          // Estrutura da API: record.employee.full_name, record.employee.employee_id
+          table.innerHTML = records.map(r => {
+            const emp = r.employee || {};
+            return `
+              <div class="record-item">
+                <p><strong>${emp.full_name || "-"}</strong> (${emp.employee_id || "-"})</p>
+                <p>Data: <span class="time-badge">${formatDate(r.date)}</span></p>
+                <p>Entrada: <span class="time-badge">${formatTime(r.clock_in)}</span></p>
+                <p>Saída: <span class="time-badge">${formatTime(r.clock_out)}</span></p>
+                <p>Horas totais: <strong>${r.worked_hours || "-"}</strong></p>
+                <p>Observação: ${r.observation || "-"}</p>
+              </div>`;
+          }).join("");
+
+        } catch (e) {
+          showAlert("adminAlert", "Erro ao buscar registros: " + e.message);
+          table.innerHTML = '<p style="color:#999;text-align:center">Erro ao carregar registros</p>';
         } finally {
-          loginBtn.disabled = false;
-          loginBtn.classList.remove("loading");
+          btn.disabled = false;
         }
-      };
+      }
+
+      // ── Inicialização ────────────────────────────────────────────────────
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Restaura sessão se já estava logado
+        const token = sessionStorage.getItem("authToken");
+        if (token) {
+          authToken   = token;
+          userRole    = (sessionStorage.getItem("userRole") || "").toLowerCase();
+          currentUser = JSON.parse(sessionStorage.getItem("currentUser") || "null");
+          hide("loginScreen");
+          userRole === "admin" ? loadAdminDashboard() : loadEmployeeDashboard();
+        }
+        // Enter nos campos de login
+        ["employeeId", "password"].forEach(id => {
+          document.getElementById(id).addEventListener("keydown", e => {
+            if (e.key === "Enter") handleLogin();
+          });
+        });
+      });
     </script>
   </body>
 </html>

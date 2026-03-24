@@ -85,16 +85,13 @@ if DB_ENGINE == 'postgresql':
             'PASSWORD': config('DB_PASSWORD', default=''),
             'HOST': config('DB_HOST', default='localhost'),
             'PORT': config('DB_PORT', default='5432'),
+            'OPTIONS': {
+                'client_encoding': 'UTF8',
+                # (opcional) '-c timezone=UTC' ou outros:
+                # 'options': '-c lc_messages=en_US.UTF-8',
+            },
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-
 # ---------------------------------------------------------------------------
 # Custom User Model
 # ---------------------------------------------------------------------------
