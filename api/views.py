@@ -139,19 +139,23 @@ class EmployeeRecordListView(generics.ListAPIView):
     """
     GET /api/records/
 
-    Returns all time records belonging to the authenticated employee.
+    For employees, returns only the authenticated employee's records.
+    For admins, returns all records (for audit oversight).
+
     Supports optional filtering by date: ?date=YYYY-MM-DD
 
     Response (200 OK): List of TimeRecord objects.
     """
 
-    permission_classes = [IsAuthenticated, IsEmployee]
+    permission_classes = [IsAuthenticated]  # allow admin and employee
     serializer_class = TimeRecordEmployeeSerializer
 
     def get_queryset(self):
-        # Only return records belonging to the authenticated employee
-        queryset = TimeRecord.objects.filter(user=self.request.user)
-        # Optional date filter
+        if self.request.user.role == 'admin':
+            queryset = TimeRecord.objects.select_related('user').all()
+        else:
+            queryset = TimeRecord.objects.filter(user=self.request.user)
+
         date_param = self.request.query_params.get('date')
         if date_param:
             queryset = queryset.filter(date=date_param)
@@ -223,10 +227,14 @@ class AdminTimeRecordListView(generics.ListAPIView):
         if date_param:
             queryset = queryset.filter(date=date_param)
 
-        # Optional employee_id exact filter
-        emp_id = self.request.query_params.get('employee_id')
-        if emp_id:
-            queryset = queryset.filter(user__employee_id=emp_id)
+        # Optional search by employee name or ID
+        search = self.request.query_params.get('search', '').strip()
+        if search:
+            terms = [t for t in search.split() if t]
+            person_filter = Q(user__first_name__icontains=search) | Q(user__last_name__icontains=search) | Q(user__employee_id__icontains=search)
+            for term in terms:
+                person_filter |= Q(user__first_name__icontains=term) | Q(user__last_name__icontains=term)
+            queryset = queryset.filter(person_filter)
 
         return queryset
 

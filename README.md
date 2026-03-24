@@ -152,7 +152,7 @@ python manage.py runserver
 
 1. Acesse http://localhost:8000
 2. Digite seu **ID do Funcionário** (ex: `EMP001`)
-3. Digite sua **Senha**
+3. Digite sua **Senha** (Senha padrão: Pbkdf2@1234)
 4. Clique em **"Entrar"**
 
 ### 👥 Para Funcionários
